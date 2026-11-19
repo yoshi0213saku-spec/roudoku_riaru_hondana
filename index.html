@@ -551,6 +551,18 @@ function back() {
   else { try { history.replaceState(null, "", location.pathname + location.search); } catch (e) { location.hash = ""; } route(); }
 }
 let entered = false;
+/* 本を閉じて、本棚にもどす */
+function toShelf() {
+  try { history.replaceState(null, "", location.pathname + location.search); } catch (e) { location.hash = ""; }
+  route();
+}
+window.__closeReader = toShelf;
+try {
+  if (window.parent !== window && window.parent.__closeReader &&
+      window.parent.location.pathname.replace(/index\.html$/, "") === location.pathname.replace(/index\.html$/, "")) {
+    window.parent.__closeReader();
+  }
+} catch (e) {}
 
 function showBook(b) {
   const i = BOOKS.indexOf(b);
@@ -594,9 +606,34 @@ function showReader(b) {
   const f = $("#rdFrame");
   $("#rdWait").style.display = "";
   if (f.getAttribute("src") !== u) { f.style.opacity = 0; f.src = u; }
-  f.onload = () => { f.style.opacity = 1; $("#rdWait").style.display = "none"; };
+  f.onload = () => {
+    f.style.opacity = 1; $("#rdWait").style.display = "none";
+    fixBackLinks(f);
+    setTimeout(() => fixBackLinks(f), 600);
+  };
   $("#reader").classList.remove("hidden");
   document.body.style.overflow = "hidden";
+}
+/* 朗読帖のページにある「朗読帖の本棚にもどる」を「本棚にもどす」にして、
+   押したら本の中に本棚を開かず、この本棚の画面にもどる */
+const samePage = u => u.origin === location.origin &&
+  u.pathname.replace(/index\.html$/, "") === location.pathname.replace(/index\.html$/, "");
+function isShelfUrl(u) { return samePage(u) || /\/roudoku_hondana(\/|$)/.test(u.pathname); }
+function fixBackLinks(f) {
+  let w, d;
+  try { w = f.contentWindow; d = f.contentDocument; if (!d || !w.location.href.startsWith("http")) return; } catch (e) { return; }
+  try {
+    if (isShelfUrl(new URL(w.location.href))) { toShelf(); return; }  // 本の中に本棚が開いてしまったとき
+    d.querySelectorAll("a[href]").forEach(a => {
+      if (a.dataset.shelfFixed) return;
+      let u; try { u = new URL(a.getAttribute("href"), w.location.href); } catch (e) { return; }
+      if (!isShelfUrl(u)) return;
+      a.dataset.shelfFixed = "1";
+      a.textContent = "‹ 本棚にもどす";
+      a.removeAttribute("target");
+      a.addEventListener("click", e => { e.preventDefault(); toShelf(); });
+    });
+  } catch (e) {}
 }
 function hideReader() {
   const f = $("#rdFrame");
