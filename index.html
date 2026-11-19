@@ -169,7 +169,7 @@
   .rd-bar a,.rd-bar button{flex:none;background:rgba(255,255,255,.06);border:1px solid var(--line);border-radius:20px;padding:8px 13px;font-size:14px;color:var(--cream);text-decoration:none}
   .rd-body{position:relative;flex:1}
   .rd-body iframe{position:absolute;inset:0;width:100%;height:100%;border:0;background:#fff}
-  .rd-wait{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;color:#5b4a38;font-family:var(--mincho);font-size:16px;text-align:center;padding:24px;line-height:1.8}
+  .rd-wait{position:absolute;inset:0;z-index:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;color:#5b4a38;font-family:var(--mincho);font-size:16px;text-align:center;padding:24px;line-height:1.8}
   .rd-wait a{color:#24476b;font-family:var(--gothic);font-weight:700}
   @media (prefers-reduced-motion:reduce){.tome,.rd,.bv{animation:none}.spine{transition:none}}
 </style>
@@ -431,7 +431,7 @@
     <a id="rdOut" href="#" target="_blank" rel="noopener">別画面 ↗</a>
   </div>
   <div class="rd-body">
-    <div class="rd-wait" id="rdWait">本をひらいています…<a id="rdWaitLink" href="#" target="_blank" rel="noopener">ひらかないときは、ここを押してください</a></div>
+    <div class="rd-wait" id="rdWait"><span id="rdWaitMsg">本をひらいています…</span><a id="rdWaitLink" href="#" target="_blank" rel="noopener">別の画面で本をひらく ↗</a></div>
     <iframe id="rdFrame" title="朗読帖" allow="autoplay; fullscreen"></iframe>
   </div>
 </section>
@@ -604,9 +604,18 @@ function showReader(b) {
   $("#rdTitle").textContent = b.title;
   $("#rdOut").href = u; $("#rdWaitLink").href = u;
   const f = $("#rdFrame");
-  $("#rdWait").style.display = "";
+  $("#rdWait").style.display = ""; $("#rdWaitMsg").textContent = "本をひらいています…";
   if (f.getAttribute("src") !== u) { f.style.opacity = 0; f.src = u; }
   f.onload = () => {
+    if (!f.getAttribute("src") || f.getAttribute("src") === "about:blank") return;
+    let ok = false;
+    try { const d = f.contentDocument; ok = !!(d && d.body && d.body.childElementCount); } catch (e) {}
+    if (!ok) {  // この画面の中では朗読帖をひらけない（Claudeの画面で見ているときなど）
+      f.style.opacity = 0;
+      $("#rdWaitMsg").innerHTML = "この画面の中では、本をひらくことができません。<br>GitHubで公開した本棚では、ここに本文が出ます。";
+      $("#rdWait").style.display = "";
+      return;
+    }
     f.style.opacity = 1; $("#rdWait").style.display = "none";
     fixBackLinks(f);
     setTimeout(() => fixBackLinks(f), 600);
