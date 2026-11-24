@@ -91,7 +91,7 @@
   .spine.pulling{transform:translateY(calc(-62px * var(--k))) rotate(-2deg) scale(1.04);z-index:5;box-shadow:0 0 0 1px rgba(0,0,0,.45), 4px 16px 22px rgba(0,0,0,.7)}
   .sp-band{width:100%;height:calc(5px * var(--k));margin-top:calc(8px * var(--k));
     border-top:1px solid var(--g);border-bottom:1px solid var(--g);opacity:.9}
-  .sp-band.b{margin-top:auto;flex:none}
+  .sp-band.b{margin-top:auto;margin-bottom:calc(10px * var(--k));flex:none}
   .sp-no,.sp-band{flex:none}
   .sp-art{flex:none;width:78%;aspect-ratio:1/.8;margin-top:calc(7px * var(--k));border:1.5px solid var(--g);border-radius:2px;overflow:hidden;
     box-shadow:inset 0 0 0 1px rgba(0,0,0,.4)}
@@ -535,7 +535,7 @@ function spineHtml(b, i) {
   return `<button class="spine" data-book="${b.id}" style="--c:${b.c};--g:${b.g};--w:${b.w};--h:${b.h}" aria-label="第${KAN[i]}冊　${esc(b.title)}を取り出す">
     <span class="sp-band"></span>
     <span class="sp-title">${t}</span>
-    <span class="sp-band b"></span><span class="sp-no">第${KAN[i]}冊</span></button>`;
+    <span class="sp-band b"></span></button>`;
 }
 function renderShelf() {
   const w = window.innerWidth;
