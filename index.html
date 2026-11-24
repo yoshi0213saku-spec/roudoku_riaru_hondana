@@ -140,6 +140,15 @@
   .tome::before{content:"";position:absolute;top:1.6%;bottom:1.6%;right:-9px;width:10px;border-radius:0 3px 3px 0;
     background:repeating-linear-gradient(90deg,#efe5cf 0 1px,#d6c9ad 1px 2px);box-shadow:2px 2px 6px rgba(0,0,0,.5)}
   .tome.tall{aspect-ratio:9/16;width:min(58vw,250px)}  /* 縦長の表紙（谷にひびく 全三巻） */
+  /* 谷にひびく 全三巻は右綴じ：背表紙は右、紙の小口（ページの厚み）は左 */
+  .tome.tall{animation-name:takeoutR}
+  @keyframes takeoutR{from{transform:translateY(40px) rotateY(62deg) scale(.55);opacity:0}to{transform:none;opacity:1}}
+  .tome.tall::before{right:auto;left:-9px;border-radius:3px 0 0 3px;box-shadow:-2px 2px 6px rgba(0,0,0,.5)}
+  .tome.tall .cover{border-radius:5px 2px 2px 5px;box-shadow:0 0 0 1px rgba(0,0,0,.5), -6px 18px 30px rgba(0,0,0,.6)}
+  .tome.tall .cover::before{left:auto;right:0;width:6.5%;
+    background:linear-gradient(270deg,rgba(0,0,0,.5),rgba(255,255,255,.18) 55%,rgba(0,0,0,.3))}
+  .tome.tall .cover::after{background:linear-gradient(245deg,rgba(255,255,255,.18),rgba(255,255,255,0) 30%)}
+  .tome.tall .cv-author{left:8%}
   .cover{position:absolute;inset:0;border-radius:2px 5px 5px 2px;overflow:hidden;background:var(--c);
     box-shadow:0 0 0 1px rgba(0,0,0,.5), 6px 18px 30px rgba(0,0,0,.6)}
   .cover svg{display:block;width:100%;height:100%}
@@ -604,7 +613,7 @@ function showBook(b) {
   $("#bvInner").innerHTML = `
     <div class="bv-head"><button class="btn-ghost" data-act="back">‹ 本棚にもどす</button></div>
     <div class="stage"><div class="tome${b.img ? " tall" : ""}" style="--c:${b.c}">
-      <div class="cover">${b.img ? `<svg viewBox="0 0 1080 1920" aria-hidden="true"><use href="#cv-${b.id}"/></svg>` : art(b.id)}${b.img ? "" : `<div class="cv-title">${t}</div>`}<div class="cv-author">作　中島義健</div></div>
+      <div class="cover">${b.img ? `<svg viewBox="60 0 1080 1920" aria-hidden="true"><defs><clipPath id="spR"><rect x="1080" y="0" width="60" height="1920"/></clipPath></defs><use href="#cv-${b.id}"/><g clip-path="url(#spR)"><use href="#cv-${b.id}" transform="translate(1080 0) scale(60 1) translate(-1079 0)"/></g></svg>` : art(b.id)}${b.img ? "" : `<div class="cv-title">${t}</div>`}<div class="cv-author">作　中島義健</div></div>
     </div></div>
     <div class="bv-info">
       <div class="vol">朗読帖　第${KAN[i]}冊</div>
