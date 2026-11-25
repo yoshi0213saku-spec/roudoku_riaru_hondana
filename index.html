@@ -92,6 +92,8 @@
   .sp-band{width:100%;height:calc(5px * var(--k));margin-top:calc(8px * var(--k));
     border-top:1px solid var(--g);border-bottom:1px solid var(--g);opacity:.9}
   .sp-band.b{margin-top:auto;margin-bottom:calc(10px * var(--k));flex:none}
+  .sp-band.b:has(+ .sp-vol){margin-bottom:0}
+  .sp-vol{font-size:calc(11.5px * var(--k));letter-spacing:.08em}
   .sp-no,.sp-band{flex:none}
   .sp-art{flex:none;width:78%;aspect-ratio:1/.8;margin-top:calc(7px * var(--k));border:1.5px solid var(--g);border-radius:2px;overflow:hidden;
     box-shadow:inset 0 0 0 1px rgba(0,0,0,.4)}
@@ -493,15 +495,15 @@ const BOOKS = [
     meta:"「はじめに」と全五話", c:"#5d6290", g:"#f6ecd6", w:52, h:244,
     desc:"こぶしの花、八十八夜の霜、月の満ち欠け。昔の人が畑で語りついだ言い伝えを、ばあちゃんと孫の物語にした五話。",
     stories:[["第一話","こぶしの花が咲いたら種をまけ"],["第二話","八十八夜の別れ霜"],["第三話","種は三粒まけ"],["第四話","月の満ち欠けと種まき"],["第五話","土は手のひらで知る"]] },
-  { id:"tani1", series:"tani", repo:"roudoku_taninihibiku_jyougenji/vol1", title:"谷にひびく　一の巻", spine:["谷にひびく","一の巻"], img:true, intro:"はじめに",
+  { id:"tani1", series:"tani", repo:"roudoku_taninihibiku_jyougenji/vol1", title:"谷にひびく　一の巻", spine:["谷にひびく","常源寺ものがたり"], vol:"一の巻", img:true, intro:"はじめに",
     meta:"「はじめに」と第一話", c:"#5b5172", g:"#f2d2a6", w:46, h:244,
     desc:"南相木の谷にある常源寺。その再建記念誌『名刹 常源寺』をもとにした、全三巻の朗読の一の巻。戦をやめた殿さまが寺を建て、はじめて鐘を鳴らした日の物語です。",
     stories:[["第一話","鐘の音が消えるまで"]] },
-  { id:"tani2", series:"tani", repo:"roudoku_taninihibiku_jyougenji/vol2", title:"谷にひびく　二の巻", spine:["谷にひびく","二の巻"], img:true, intro:"この巻について",
+  { id:"tani2", series:"tani", repo:"roudoku_taninihibiku_jyougenji/vol2", title:"谷にひびく　二の巻", spine:["谷にひびく","常源寺ものがたり"], vol:"二の巻", img:true, intro:"この巻について",
     meta:"「この巻について」と第二話", c:"#2b3354", g:"#f3dfb4", w:46, h:244,
     desc:"『谷にひびく』二の巻。お寺を開いた年老いた和尚さまが、夜泣きに困る若い母親に、墓の中で生まれた自分のことを語ります。",
     stories:[["第二話","卯月八日の子"]] },
-  { id:"tani3", series:"tani", repo:"roudoku_taninihibiku_jyougenji/vol3", title:"谷にひびく　三の巻", spine:["谷にひびく","三の巻"], img:true, intro:"この巻について",
+  { id:"tani3", series:"tani", repo:"roudoku_taninihibiku_jyougenji/vol3", title:"谷にひびく　三の巻", spine:["谷にひびく","常源寺ものがたり"], vol:"三の巻", img:true, intro:"この巻について",
     meta:"「この巻について」と第三話", c:"#d3dccd", g:"#4a3a48", w:46, h:244,
     desc:"『谷にひびく』最後の三の巻。川中島の戦で夫を亡くした殿さまの娘・千代さまが、父から小さな鈴を受け取り、祈りの道を歩みはじめます。",
     stories:[["第三話","鈴の音"]] },
@@ -537,7 +539,7 @@ function spineHtml(b, i) {
   return `<button class="spine" data-book="${b.id}" style="--c:${b.c};--g:${b.g};--w:${b.w};--h:${b.h}" aria-label="第${KAN[i]}冊　${esc(b.title)}を取り出す">
     <span class="sp-band"></span>
     <span class="sp-title">${t}</span>
-    <span class="sp-band b"></span></button>`;
+    <span class="sp-band b"></span>${b.vol ? `<span class="sp-no sp-vol">${esc(b.vol)}</span>` : ""}</button>`;
 }
 function renderShelf() {
   const w = window.innerWidth;
