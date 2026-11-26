@@ -501,31 +501,12 @@ const BOOKS = [
     meta:"常源寺ものがたり　「はじめに」と全三話", c:"#5b5172", g:"#f2d2a6", w:54, h:244,
     desc:"南相木の谷にある常源寺。その再建記念誌『名刹 常源寺』をもとにした創作です。鐘の音、赤子の産声、鈴の音。戦国の谷にひびいた三つの音の物語。",
     stories:[["第一話","鐘の音が消えるまで"],["第二話","卯月八日の子"],["第三話","鈴の音"]] },
-  { id:"wari1", repo:"roudoku_tanino_waritukejyo", page:"index.html", series:"wari", vol:"一の巻", title:"谷の割付状　一の巻", spine:["谷の割付状","天保の名主ものがたり"],
-    imgUrl:"https://yoshi0213saku-spec.github.io/roudoku_tanino_waritukejyo/images/cover_1.jpg", 
-    meta:"天保の名主ものがたり　「はじめに」と第一話", c:"#b5652a", g:"#fbecd2", w:50, h:258,
-    desc:"江戸時代、幕府の天領だった南相木の谷。毎年秋になると、代官所から年貢の割付状が届きました。史実をもとにした全五巻の朗読の一の巻。時代と史実をたどる「はじめに」と、名主の清兵衛が割付状を受け取る秋の物語です。",
-    stories:[["第一話", "割付状の届く日"]] },
-  { id:"wari2", repo:"roudoku_tanino_waritukejyo", page:"maki2.html", series:"wari", vol:"二の巻", title:"谷の割付状　二の巻", spine:["谷の割付状","天保の名主ものがたり"],
-    imgUrl:"https://yoshi0213saku-spec.github.io/roudoku_tanino_waritukejyo/images/cover_2.jpg", noIntro:true, 
-    meta:"天保の名主ものがたり　第二話", c:"#4d5e60", g:"#eef2ec", w:50, h:258,
-    desc:"『谷の割付状』二の巻。天保四年、山の雪が消えず、冷たい雨のつづく夏。実らない畑を前に、名主の清兵衛は代官所へ願い出る決心をします。",
-    stories:[["第二話", "冷たい夏"]] },
-  { id:"wari3", repo:"roudoku_tanino_waritukejyo", page:"maki3.html", series:"wari", vol:"三の巻", title:"谷の割付状　三の巻", spine:["谷の割付状","天保の名主ものがたり"],
-    imgUrl:"https://yoshi0213saku-spec.github.io/roudoku_tanino_waritukejyo/images/cover_3.jpg", noIntro:true, 
-    meta:"天保の名主ものがたり　第三話", c:"#8a6a34", g:"#fff6dc", w:50, h:258,
-    desc:"『谷の割付状』三の巻。願書を胸に、清兵衛と息子の与吉は千曲川ぞいの道を、御影の陣屋へ歩いていきます。",
-    stories:[["第三話", "御影への道"]] },
-  { id:"wari4", repo:"roudoku_tanino_waritukejyo", page:"maki4.html", series:"wari", vol:"四の巻", title:"谷の割付状　四の巻", spine:["谷の割付状","天保の名主ものがたり"],
-    imgUrl:"https://yoshi0213saku-spec.github.io/roudoku_tanino_waritukejyo/images/cover_4.jpg", noIntro:true, 
-    meta:"天保の名主ものがたり　第四話", c:"#2c4566", g:"#f5f8fb", w:50, h:258,
-    desc:"『谷の割付状』四の巻。食べる物も足りない冬。谷の男たちは炭を焼き、雪の峠をこえて上州へ売りに行きます。",
-    stories:[["第四話", "峠をこえる炭"]] },
-  { id:"wari5", repo:"roudoku_tanino_waritukejyo", page:"maki5.html", series:"wari", vol:"五の巻", title:"谷の割付状　五の巻", spine:["谷の割付状","天保の名主ものがたり"],
-    imgUrl:"https://yoshi0213saku-spec.github.io/roudoku_tanino_waritukejyo/images/cover_5.jpg", noIntro:true, 
-    meta:"天保の名主ものがたり　第五話", c:"#4a1f3e", g:"#ffd08a", w:50, h:258,
-    desc:"『谷の割付状』最後の五の巻。ようやく実りの秋がめぐってきた天保八年。神楽殿の廻り舞台に、ふたたび灯がともります。",
-    stories:[["第五話", "廻り舞台"]] },
+  { id:"wari", repo:"roudoku_tanino_waritukejyo", title:"谷の割付状", spine:["谷の割付状","天保の名主ものがたり"],
+    imgUrl:"https://yoshi0213saku-spec.github.io/roudoku_tanino_waritukejyo/images/cover_1.jpg",
+    hint:"「はじめに」と第一話から始まり、巻の終わりの「次の巻へ」で五の巻まで続けて読めます。",
+    meta:"天保の名主ものがたり　「はじめに」と全五話", c:"#b5652a", g:"#fbecd2", w:52, h:258,
+    desc:"江戸時代、幕府の天領だった南相木の谷。毎年秋になると、代官所から年貢の割付状が届きました。冷たい夏と凶作がおそった天保の年、名主の清兵衛と村人たちが支えあって冬を越す、史実をもとにした創作の物語です。",
+    stories:[["第一話","割付状の届く日"],["第二話","冷たい夏"],["第三話","御影への道"],["第四話","峠をこえる炭"],["第五話","廻り舞台"]] },
 ];
 const KAN = ["一","二","三","四","五","六","七","八","九","十","十一","十二"];
 const $ = s => document.querySelector(s);
@@ -629,7 +610,7 @@ try {
   }
 } catch (e) {}
 
-const RB = new Set(["roudoku","rekishi","hitobito","tane","kotoba","tani1","tani2","tani3","wari1","wari2","wari3","wari4","wari5"]);  // 右綴じにする本（いまは全冊）
+const RB = new Set(["roudoku","rekishi","hitobito","tane","kotoba","tani1","tani2","tani3","wari"]);  // 右綴じにする本（いまは全冊）
 function showBook(b) {
   const i = BOOKS.indexOf(b);
   const t = b.spine.length > 1 ? `${esc(b.spine[0])}<small>${esc(b.spine[1])}</small>` : esc(b.title);
@@ -647,7 +628,7 @@ function showBook(b) {
     </div>
     <p class="bv-desc">${esc(b.desc)}</p>
     <button class="btn-main" data-act="read">本をひらいて　読む・聞く</button>
-    <p class="hint">${b.noIntro ? "ひらくと、この巻の朗読を聞けます。" : `「${esc(b.intro || "はじめに")}」から再生すると、${b.series ? "この巻の最後の話まで" : "最後の話まで"}続けて聞けます。`}</p>
+    <p class="hint">${b.hint ? esc(b.hint) : b.noIntro ? "ひらくと、この巻の朗読を聞けます。" : `「${esc(b.intro || "はじめに")}」から再生すると、${b.series ? "この巻の最後の話まで" : "最後の話まで"}続けて聞けます。`}</p>
     <div class="contents"><h3>目　次</h3><ol>
       ${b.noIntro ? "" : `<li><button data-act="read"><span class="n">序</span>${esc(b.intro || "はじめに")}<span class="go">›</span></button></li>`}
       ${b.stories.map(([n, s]) => `<li><button data-act="read"><span class="n">${esc(n)}</span>${esc(s)}<span class="go">›</span></button></li>`).join("")}
