@@ -104,6 +104,8 @@
   .sp-title small{font-size:.66em;font-weight:700;opacity:.9;letter-spacing:.06em;padding-top:1.2em}
   .sp-no{font-family:var(--mincho);font-weight:700;font-size:calc(10.5px * var(--k));color:var(--g);opacity:.9;padding:calc(5px * var(--k)) 0 calc(7px * var(--k));letter-spacing:0;white-space:nowrap}
   .spine[data-book="tani3"] .sp-title{text-shadow:0 1px 0 rgba(255,255,255,.55)}  /* 明るい背表紙（三の巻） */
+  .spine[data-book^="wari"] .sp-title{margin-top:calc(14px * var(--k));letter-spacing:.06em}  /* 谷の割付状：副題が長いので少し詰める */
+  .spine[data-book^="wari"] .sp-title small{font-size:.6em;padding-top:.8em}
   /* 本立て */
   .bookend{flex:none;width:calc(14px * var(--k));height:calc(130px * var(--k));border-radius:2px 2px 0 0;
     background:linear-gradient(90deg,#3c3f44,#8c9097 45%,#4a4d52);box-shadow:1px 0 2px rgba(0,0,0,.6)}
@@ -499,13 +501,39 @@ const BOOKS = [
     meta:"常源寺ものがたり　「はじめに」と全三話", c:"#5b5172", g:"#f2d2a6", w:54, h:244,
     desc:"南相木の谷にある常源寺。その再建記念誌『名刹 常源寺』をもとにした創作です。鐘の音、赤子の産声、鈴の音。戦国の谷にひびいた三つの音の物語。",
     stories:[["第一話","鐘の音が消えるまで"],["第二話","卯月八日の子"],["第三話","鈴の音"]] },
+  { id:"wari1", repo:"roudoku_tanino_waritukejyo", page:"index.html", series:"wari", vol:"一の巻", title:"谷の割付状　一の巻", spine:["谷の割付状","天保の名主ものがたり"],
+    imgUrl:"https://yoshi0213saku-spec.github.io/roudoku_tanino_waritukejyo/images/cover_1.jpg", 
+    meta:"天保の名主ものがたり　「はじめに」と第一話", c:"#b5652a", g:"#fbecd2", w:50, h:258,
+    desc:"江戸時代、幕府の天領だった南相木の谷。毎年秋になると、代官所から年貢の割付状が届きました。史実をもとにした全五巻の朗読の一の巻。時代と史実をたどる「はじめに」と、名主の清兵衛が割付状を受け取る秋の物語です。",
+    stories:[["第一話", "割付状の届く日"]] },
+  { id:"wari2", repo:"roudoku_tanino_waritukejyo", page:"maki2.html", series:"wari", vol:"二の巻", title:"谷の割付状　二の巻", spine:["谷の割付状","天保の名主ものがたり"],
+    imgUrl:"https://yoshi0213saku-spec.github.io/roudoku_tanino_waritukejyo/images/cover_2.jpg", noIntro:true, 
+    meta:"天保の名主ものがたり　第二話", c:"#4d5e60", g:"#eef2ec", w:50, h:258,
+    desc:"『谷の割付状』二の巻。天保四年、山の雪が消えず、冷たい雨のつづく夏。実らない畑を前に、名主の清兵衛は代官所へ願い出る決心をします。",
+    stories:[["第二話", "冷たい夏"]] },
+  { id:"wari3", repo:"roudoku_tanino_waritukejyo", page:"maki3.html", series:"wari", vol:"三の巻", title:"谷の割付状　三の巻", spine:["谷の割付状","天保の名主ものがたり"],
+    imgUrl:"https://yoshi0213saku-spec.github.io/roudoku_tanino_waritukejyo/images/cover_3.jpg", noIntro:true, 
+    meta:"天保の名主ものがたり　第三話", c:"#8a6a34", g:"#fff6dc", w:50, h:258,
+    desc:"『谷の割付状』三の巻。願書を胸に、清兵衛と息子の与吉は千曲川ぞいの道を、御影の陣屋へ歩いていきます。",
+    stories:[["第三話", "御影への道"]] },
+  { id:"wari4", repo:"roudoku_tanino_waritukejyo", page:"maki4.html", series:"wari", vol:"四の巻", title:"谷の割付状　四の巻", spine:["谷の割付状","天保の名主ものがたり"],
+    imgUrl:"https://yoshi0213saku-spec.github.io/roudoku_tanino_waritukejyo/images/cover_4.jpg", noIntro:true, 
+    meta:"天保の名主ものがたり　第四話", c:"#2c4566", g:"#f5f8fb", w:50, h:258,
+    desc:"『谷の割付状』四の巻。食べる物も足りない冬。谷の男たちは炭を焼き、雪の峠をこえて上州へ売りに行きます。",
+    stories:[["第四話", "峠をこえる炭"]] },
+  { id:"wari5", repo:"roudoku_tanino_waritukejyo", page:"maki5.html", series:"wari", vol:"五の巻", title:"谷の割付状　五の巻", spine:["谷の割付状","天保の名主ものがたり"],
+    imgUrl:"https://yoshi0213saku-spec.github.io/roudoku_tanino_waritukejyo/images/cover_5.jpg", noIntro:true, 
+    meta:"天保の名主ものがたり　第五話", c:"#4a1f3e", g:"#ffd08a", w:50, h:258,
+    desc:"『谷の割付状』最後の五の巻。ようやく実りの秋がめぐってきた天保八年。神楽殿の廻り舞台に、ふたたび灯がともります。",
+    stories:[["第五話", "廻り舞台"]] },
 ];
 const KAN = ["一","二","三","四","五","六","七","八","九","十","十一","十二"];
 const $ = s => document.querySelector(s);
 const esc = s => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-const urlOf = b => "https://" + OWNER + ".github.io/" + b.repo + "/";
+const urlOf = b => "https://" + OWNER + ".github.io/" + b.repo + "/" + (b.page && b.page !== "index.html" ? b.page : "");
 const getBook = id => BOOKS.find(b => b.id === id);
-const art = (id, cls) => `<svg ${cls ? `class="${cls}"` : ""} viewBox="0 0 400 480" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><use href="#cv-${id}"/></svg>`;
+const imgArt = b => `<img src="${b.imgUrl}" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block">`;
+const art = (id, cls) => (getBook(id) && getBook(id).imgUrl) ? imgArt(getBook(id)) : `<svg ${cls ? `class="${cls}"` : ""} viewBox="0 0 400 480" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><use href="#cv-${id}"/></svg>`;
 
 /* ---------- 木目 ---------- */
 (function woodGrain() {
@@ -601,7 +629,7 @@ try {
   }
 } catch (e) {}
 
-const RB = new Set(["roudoku","rekishi","hitobito","tane","kotoba","tani1","tani2","tani3"]);  // 右綴じにする本（いまは全冊）
+const RB = new Set(["roudoku","rekishi","hitobito","tane","kotoba","tani1","tani2","tani3","wari1","wari2","wari3","wari4","wari5"]);  // 右綴じにする本（いまは全冊）
 function showBook(b) {
   const i = BOOKS.indexOf(b);
   const t = b.spine.length > 1 ? `${esc(b.spine[0])}<small>${esc(b.spine[1])}</small>` : esc(b.title);
@@ -609,8 +637,8 @@ function showBook(b) {
   $("#bvBg").style.cssText = "filter:blur(28px) brightness(.5);transform:scale(1.2)";
   $("#bvInner").innerHTML = `
     <div class="bv-head"><button class="btn-ghost" data-act="back">‹ 本棚にもどす</button></div>
-    <div class="stage"><div class="tome${b.img ? " tall" : ""}${RB.has(b.id) ? " rb" : ""}" style="--c:${b.c}">
-      <div class="cover">${b.img ? `<svg viewBox="60 0 1080 1920" preserveAspectRatio="xMidYMin slice" aria-hidden="true"><defs><clipPath id="spR"><rect x="1080" y="0" width="60" height="1920"/></clipPath></defs><use href="#cv-${b.id}"/><g clip-path="url(#spR)"><use href="#cv-${b.id}" transform="translate(1080 0) scale(60 1) translate(-1079 0)"/></g></svg>` : art(b.id)}${b.img ? "" : `<div class="cv-title">${t}</div>`}<div class="cv-author">作　中島義健</div></div>
+    <div class="stage"><div class="tome${b.img || b.imgUrl ? " tall" : ""}${RB.has(b.id) ? " rb" : ""}" data-bk="${b.id}" style="--c:${b.c}">
+      <div class="cover">${b.imgUrl ? imgArt(b) : b.img ? `<svg viewBox="60 0 1080 1920" preserveAspectRatio="xMidYMin slice" aria-hidden="true"><defs><clipPath id="spR"><rect x="1080" y="0" width="60" height="1920"/></clipPath></defs><use href="#cv-${b.id}"/><g clip-path="url(#spR)"><use href="#cv-${b.id}" transform="translate(1080 0) scale(60 1) translate(-1079 0)"/></g></svg>` : art(b.id)}${b.img || b.imgUrl ? "" : `<div class="cv-title">${t}</div>`}${b.imgUrl ? "" : `<div class="cv-author">作　中島義健</div>`}</div>
     </div></div>
     <div class="bv-info">
       <div class="vol">朗読帖　第${KAN[i]}冊</div>
@@ -619,9 +647,9 @@ function showBook(b) {
     </div>
     <p class="bv-desc">${esc(b.desc)}</p>
     <button class="btn-main" data-act="read">本をひらいて　読む・聞く</button>
-    <p class="hint">「${esc(b.intro || "はじめに")}」から再生すると、${b.series ? "この巻の最後の話まで" : "最後の話まで"}続けて聞けます。</p>
+    <p class="hint">${b.noIntro ? "ひらくと、この巻の朗読を聞けます。" : `「${esc(b.intro || "はじめに")}」から再生すると、${b.series ? "この巻の最後の話まで" : "最後の話まで"}続けて聞けます。`}</p>
     <div class="contents"><h3>目　次</h3><ol>
-      <li><button data-act="read"><span class="n">序</span>${esc(b.intro || "はじめに")}<span class="go">›</span></button></li>
+      ${b.noIntro ? "" : `<li><button data-act="read"><span class="n">序</span>${esc(b.intro || "はじめに")}<span class="go">›</span></button></li>`}
       ${b.stories.map(([n, s]) => `<li><button data-act="read"><span class="n">${esc(n)}</span>${esc(s)}<span class="go">›</span></button></li>`).join("")}
     </ol></div>`;
   $("#bookView").classList.remove("hidden");
@@ -700,7 +728,7 @@ function route() {
   } else if ((m = h.match(/^#b-(.+)$/)) && getBook(m[1])) {
     hideReader();
     const b = getBook(m[1]);
-    if ($("#bookView").classList.contains("hidden") || !$("#bvInner").innerHTML.includes(`#cv-${b.id}`)) showBook(b);
+    if ($("#bookView").classList.contains("hidden") || !$("#bvInner").innerHTML.includes(`data-bk="${b.id}"`)) showBook(b);
     entered = true;
   } else {
     hideReader();
