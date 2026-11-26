@@ -501,13 +501,13 @@ const BOOKS = [
     meta:"常源寺ものがたり　「はじめに」と全三話", c:"#5b5172", g:"#f2d2a6", w:54, h:244,
     desc:"南相木の谷にある常源寺。その再建記念誌『名刹 常源寺』をもとにした創作です。鐘の音、赤子の産声、鈴の音。戦国の谷にひびいた三つの音の物語。",
     stories:[["第一話","鐘の音が消えるまで"],["第二話","卯月八日の子"],["第三話","鈴の音"]] },
-  { id:"wari", repo:"roudoku_tanino_waritukejyo", title:"谷の割付状", spine:["谷の割付状","天保の名主ものがたり"],
+  { id:"wari", repo:"roudoku_tanino_waritukejyo", title:"谷の割付状", maki:true, spine:["谷の割付状","天保の名主ものがたり"],
     imgUrl:"https://yoshi0213saku-spec.github.io/roudoku_tanino_waritukejyo/images/cover_1.jpg",
     hint:"「はじめに」と第一話から始まり、巻の終わりの「次の巻へ」で五の巻まで続けて読めます。",
     meta:"天保の名主ものがたり　「はじめに」と全五話", c:"#b5652a", g:"#fbecd2", w:52, h:244,
     desc:"江戸時代、幕府の天領だった南相木の谷。毎年秋になると、代官所から年貢の割付状が届きました。冷たい夏と凶作がおそった天保の年、名主の清兵衛と村人たちが支えあって冬を越す、史実をもとにした創作の物語です。",
     stories:[["第一話","割付状の届く日"],["第二話","冷たい夏"],["第三話","御影への道"],["第四話","峠をこえる炭"],["第五話","廻り舞台"]] },
-  { id:"manabi", repo:"roudoku_tanino_manabiya", title:"谷の学び舎", spine:["谷の学び舎","明治の村の学校ものがたり"],
+  { id:"manabi", repo:"roudoku_tanino_manabiya", title:"谷の学び舎", maki:true, spine:["谷の学び舎","明治の村の学校ものがたり"],
     imgUrl:"https://yoshi0213saku-spec.github.io/roudoku_tanino_manabiya/images/cover_1.jpg",
     hint:"「はじめに」と第一話から始まり、巻の終わりの「次の巻へ」で五の巻まで続けて読めます。",
     meta:"明治の村の学校ものがたり　「はじめに」と全五話", c:"#74507a", g:"#fbecd2", w:52, h:244,
@@ -518,6 +518,13 @@ const KAN = ["一","二","三","四","五","六","七","八","九","十","十一
 const $ = s => document.querySelector(s);
 const esc = s => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const urlOf = b => "https://" + OWNER + ".github.io/" + b.repo + "/" + (b.page && b.page !== "index.html" ? b.page : "");
+/* 目次で押した話のページ（ep：0＝はじめに、1＝第一話、2＝第二話…）
+   巻に分かれた本（maki:true）は、はじめに・第一話が一の巻、第二話からは maki2.html… に入っています */
+const epUrlOf = (b, ep) => {
+  if (ep == null || isNaN(ep)) return urlOf(b);
+  if (b.maki && ep >= 2) return "https://" + OWNER + ".github.io/" + b.repo + "/maki" + ep + ".html#ep0";
+  return urlOf(b) + "#ep" + ep;
+};
 const getBook = id => BOOKS.find(b => b.id === id);
 const imgArt = b => `<img src="${b.imgUrl}" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block">`;
 const art = (id, cls) => (getBook(id) && getBook(id).imgUrl) ? imgArt(getBook(id)) : `<svg ${cls ? `class="${cls}"` : ""} viewBox="0 0 400 480" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><use href="#cv-${id}"/></svg>`;
@@ -636,8 +643,8 @@ function showBook(b) {
     <button class="btn-main" data-act="read">本をひらいて　読む・聞く</button>
     <p class="hint">${b.hint ? esc(b.hint) : b.noIntro ? "ひらくと、この巻の朗読を聞けます。" : `「${esc(b.intro || "はじめに")}」から再生すると、${b.series ? "この巻の最後の話まで" : "最後の話まで"}続けて聞けます。`}</p>
     <div class="contents"><h3>目　次</h3><ol>
-      ${b.noIntro ? "" : `<li><button data-act="read"><span class="n">序</span>${esc(b.intro || "はじめに")}<span class="go">›</span></button></li>`}
-      ${b.stories.map(([n, s]) => `<li><button data-act="read"><span class="n">${esc(n)}</span>${esc(s)}<span class="go">›</span></button></li>`).join("")}
+      ${b.noIntro ? "" : `<li><button data-act="read" data-ep="0"><span class="n">序</span>${esc(b.intro || "はじめに")}<span class="go">›</span></button></li>`}
+      ${b.stories.map(([n, s], k) => `<li><button data-act="read" data-ep="${k + 1}"><span class="n">${esc(n)}</span>${esc(s)}<span class="go">›</span></button></li>`).join("")}
     </ol></div>`;
   $("#bookView").classList.remove("hidden");
   $("#bvScroll").scrollTop = 0;
@@ -647,18 +654,23 @@ $("#bvInner").addEventListener("click", e => {
   const a = e.target.closest("[data-act]"); if (!a) return;
   const id = (location.hash.match(/^#b-(.+)$/) || [])[1];
   if (a.dataset.act === "back") back();
-  else if (a.dataset.act === "read" && id) { entered = true; location.hash = "#r-" + id; }
+  else if (a.dataset.act === "read" && id) { entered = true; location.hash = "#r-" + id + (a.dataset.ep ? "/" + a.dataset.ep : ""); }
 });
 
 /* ---------- 読む・聞く ---------- */
 let waitTimer;
-function showReader(b) {
-  const u = urlOf(b);
+function showReader(b, ep) {
+  const u = epUrlOf(b, ep);
   $("#rdTitle").textContent = b.title;
   $("#rdOut").href = u; $("#rdWaitLink").href = u;
   const f = $("#rdFrame");
   $("#rdWait").style.display = ""; $("#rdWaitMsg").textContent = "本をひらいています…";
-  if (f.getAttribute("src") !== u) { f.style.opacity = 0; f.src = u; }
+  const cur = f.getAttribute("src") || "";
+  if (cur !== u) {
+    if (cur.split("#")[0] === u.split("#")[0] && f.style.opacity === "1") {
+      f.src = u; $("#rdWait").style.display = "none";  // 同じページの中で話だけ変える
+    } else { f.style.opacity = 0; f.src = u; }
+  } else if (f.style.opacity === "1") $("#rdWait").style.display = "none";
   f.onload = () => {
     if (!f.getAttribute("src") || f.getAttribute("src") === "about:blank") return;
     let ok = false;
@@ -708,10 +720,10 @@ $("#rdClose").addEventListener("click", back);
 function route() {
   const h = location.hash;
   let m;
-  if ((m = h.match(/^#r-(.+)$/)) && getBook(m[1])) {
+  if ((m = h.match(/^#r-([^\/]+)(?:\/(\d+))?$/)) && getBook(m[1])) {
     const b = getBook(m[1]);
     if ($("#bookView").classList.contains("hidden")) showBook(b);
-    showReader(b);
+    showReader(b, m[2] != null ? +m[2] : null);
   } else if ((m = h.match(/^#b-(.+)$/)) && getBook(m[1])) {
     hideReader();
     const b = getBook(m[1]);
