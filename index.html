@@ -104,8 +104,7 @@
   .sp-title small{font-size:.66em;font-weight:700;opacity:.9;letter-spacing:.06em;padding-top:1.2em}
   .sp-no{font-family:var(--mincho);font-weight:700;font-size:calc(10.5px * var(--k));color:var(--g);opacity:.9;padding:calc(5px * var(--k)) 0 calc(7px * var(--k));letter-spacing:0;white-space:nowrap}
   .spine[data-book="tani3"] .sp-title{text-shadow:0 1px 0 rgba(255,255,255,.55)}  /* 明るい背表紙（三の巻） */
-  .spine[data-book^="wari"] .sp-title{margin-top:calc(14px * var(--k));letter-spacing:.06em}  /* 谷の割付状：副題が長いので少し詰める */
-  .spine[data-book^="wari"] .sp-title small{font-size:.6em;padding-top:.8em}
+  .spine[data-book^="wari"] .sp-title small{font-size:.6em;padding-top:.8em}  /* 谷の割付状：副題が長いので少し小さく */
   /* 本立て */
   .bookend{flex:none;width:calc(14px * var(--k));height:calc(130px * var(--k));border-radius:2px 2px 0 0;
     background:linear-gradient(90deg,#3c3f44,#8c9097 45%,#4a4d52);box-shadow:1px 0 2px rgba(0,0,0,.6)}
@@ -504,7 +503,7 @@ const BOOKS = [
   { id:"wari", repo:"roudoku_tanino_waritukejyo", title:"谷の割付状", spine:["谷の割付状","天保の名主ものがたり"],
     imgUrl:"https://yoshi0213saku-spec.github.io/roudoku_tanino_waritukejyo/images/cover_1.jpg",
     hint:"「はじめに」と第一話から始まり、巻の終わりの「次の巻へ」で五の巻まで続けて読めます。",
-    meta:"天保の名主ものがたり　「はじめに」と全五話", c:"#b5652a", g:"#fbecd2", w:52, h:258,
+    meta:"天保の名主ものがたり　「はじめに」と全五話", c:"#b5652a", g:"#fbecd2", w:52, h:244,
     desc:"江戸時代、幕府の天領だった南相木の谷。毎年秋になると、代官所から年貢の割付状が届きました。冷たい夏と凶作がおそった天保の年、名主の清兵衛と村人たちが支えあって冬を越す、史実をもとにした創作の物語です。",
     stories:[["第一話","割付状の届く日"],["第二話","冷たい夏"],["第三話","御影への道"],["第四話","峠をこえる炭"],["第五話","廻り舞台"]] },
 ];
