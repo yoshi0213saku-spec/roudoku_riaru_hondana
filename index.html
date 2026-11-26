@@ -105,6 +105,7 @@
   .sp-no{font-family:var(--mincho);font-weight:700;font-size:calc(10.5px * var(--k));color:var(--g);opacity:.9;padding:calc(5px * var(--k)) 0 calc(7px * var(--k));letter-spacing:0;white-space:nowrap}
   .spine[data-book="tani3"] .sp-title{text-shadow:0 1px 0 rgba(255,255,255,.55)}  /* 明るい背表紙（三の巻） */
   .spine[data-book^="wari"] .sp-title small{font-size:.6em;padding-top:.8em}  /* 谷の割付状：副題が長いので少し小さく */
+  .spine[data-book="manabi"] .sp-title small{font-size:.54em;padding-top:.8em}  /* 谷の学び舎：副題がさらに長いので小さく */
   /* 本立て */
   .bookend{flex:none;width:calc(14px * var(--k));height:calc(130px * var(--k));border-radius:2px 2px 0 0;
     background:linear-gradient(90deg,#3c3f44,#8c9097 45%,#4a4d52);box-shadow:1px 0 2px rgba(0,0,0,.6)}
@@ -506,6 +507,12 @@ const BOOKS = [
     meta:"天保の名主ものがたり　「はじめに」と全五話", c:"#b5652a", g:"#fbecd2", w:52, h:244,
     desc:"江戸時代、幕府の天領だった南相木の谷。毎年秋になると、代官所から年貢の割付状が届きました。冷たい夏と凶作がおそった天保の年、名主の清兵衛と村人たちが支えあって冬を越す、史実をもとにした創作の物語です。",
     stories:[["第一話","割付状の届く日"],["第二話","冷たい夏"],["第三話","御影への道"],["第四話","峠をこえる炭"],["第五話","廻り舞台"]] },
+  { id:"manabi", repo:"roudoku_tanino_manabiya", title:"谷の学び舎", spine:["谷の学び舎","明治の村の学校ものがたり"],
+    imgUrl:"https://yoshi0213saku-spec.github.io/roudoku_tanino_manabiya/images/cover_1.jpg",
+    hint:"「はじめに」と第一話から始まり、巻の終わりの「次の巻へ」で五の巻まで続けて読めます。",
+    meta:"明治の村の学校ものがたり　「はじめに」と全五話", c:"#74507a", g:"#fbecd2", w:52, h:244,
+    desc:"明治のはじめ、南相木村の最初の学校は常源寺の本堂に開かれました。石盤を手に字を習う子どもたち、学校へ通えなかった少女、芝居の舞台から教室になった神楽殿。谷の学校の四十年を、史実をもとに描いた創作の物語です。",
+    stories:[["第一話","お寺の教場"],["第二話","お花の石盤"],["第三話","岩鼻の仮教室"],["第四話","舞台の上の教室"],["第五話","新しい校舎へ"]] },
 ];
 const KAN = ["一","二","三","四","五","六","七","八","九","十","十一","十二"];
 const $ = s => document.querySelector(s);
@@ -609,7 +616,7 @@ try {
   }
 } catch (e) {}
 
-const RB = new Set(["roudoku","rekishi","hitobito","tane","kotoba","tani1","tani2","tani3","wari"]);  // 右綴じにする本（いまは全冊）
+const RB = new Set(["roudoku","rekishi","hitobito","tane","kotoba","tani1","tani2","tani3","wari","manabi"]);  // 右綴じにする本（いまは全冊）
 function showBook(b) {
   const i = BOOKS.indexOf(b);
   const t = b.spine.length > 1 ? `${esc(b.spine[0])}<small>${esc(b.spine[1])}</small>` : esc(b.title);
