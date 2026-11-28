@@ -119,6 +119,11 @@
   .soon{align-self:center;font-family:var(--mincho);font-size:calc(13px * var(--k));color:var(--cream2);line-height:1.8;text-align:center;opacity:.85;padding:0 6px;letter-spacing:.08em;white-space:nowrap}
   @media (max-width:520px){.soon{display:none}.row .doll{margin:0 calc(14px * var(--k))}}
 
+  /* シリーズ名の札（各段の左上） */
+  .bay .sr-plate{position:absolute;left:clamp(8px,3vw,28px);top:5px;z-index:2}
+  .bay .sr-plate span{display:inline-block;font-family:var(--mincho);font-weight:700;font-size:calc(11px * var(--k));letter-spacing:.2em;color:#f3e2c2;
+    padding:2px 10px;border-radius:3px;background:linear-gradient(180deg,#8c5a2b,#6a411c);box-shadow:inset 0 1px 0 rgba(255,222,175,.35),0 1px 2px rgba(0,0,0,.6)}
+  .toc h3+ol{margin-bottom:22px}
   /* ===== 一覧（文字で） ===== */
   .toc{max-width:560px;margin:30px auto 0;padding:0 16px}
   .toc h3{font-size:12px;letter-spacing:.2em;color:var(--accent2);font-weight:700;margin:0 0 6px 4px}
@@ -479,49 +484,54 @@
 /* ===== 朗読帖の一覧 ===== 新しい朗読帖は、この一覧の最後に足してください */
 const OWNER = "yoshi0213saku-spec";
 const BOOKS = [
-  { id:"roudoku", repo:"roudoku_harunotanbomiti", title:"ふるさと朗読帖", spine:["ふるさと朗読帖"],
+  { id:"roudoku", sr:"furu", repo:"roudoku_harunotanbomiti", title:"ふるさと朗読帖", spine:["ふるさと朗読帖"],
     meta:"「はじめに」と全十篇", c:"#3f546d", g:"#f1e2b8", w:52, h:244,
     desc:"山あいの村の四季を、子どものころの「わたし」の思い出として描いた十篇。田んぼ道、蛍の夜、夏祭り、初雪の朝。だれの心にもある、なつかしい風景です。",
     stories:[["第一篇","春の田んぼ道"],["第二篇","れんげ畑の約束"],["第三篇","蛍の夜"],["第四篇","夏祭りの太鼓"],["第五篇","稲刈りの日"],["第六篇","峠のお地蔵さま"],["第七篇","柿の木のある家"],["第八篇","初雪の朝"],["第九篇","囲炉裏ばたの昔話"],["第十篇","小さな駅で"]] },
-  { id:"rekishi", repo:"roudoku_rekisiwo_tadorumiti", title:"歴史をたどる道", spine:["歴史をたどる道"],
+  { id:"rekishi", sr:"furu", repo:"roudoku_rekisiwo_tadorumiti", title:"歴史をたどる道", spine:["歴史をたどる道"],
     meta:"「はじめに」と全五話", c:"#4a4652", g:"#efb27a", w:47, h:244,
     desc:"武田信玄の時代、信州の山あいの谷に生きた人びとの物語。狼煙、川中島への出陣、山城の石垣。史実をもとにした五つの創作です。",
     stories:[["第一話","狼煙の上がった日"],["第二話","峠を越えた手紙"],["第三話","石を積む人"],["第四話","隠し湯の娘"],["第五話","谷に残ったもの"]] },
-  { id:"hitobito", repo:"roudoku_hurusatono_hitobito", title:"ふるさとの人びと", spine:["ふるさとの人びと"],
+  { id:"hitobito", sr:"furu", repo:"roudoku_hurusatono_hitobito", title:"ふるさとの人びと", spine:["ふるさとの人びと"],
     meta:"「はじめに」と全五話", c:"#4f7a52", g:"#f6ecd2", w:48, h:244,
     desc:"炭焼き、郵便屋さん、分校の先生、峠の茶屋、鍛冶屋。村の暮らしを支えた人びとを、一人ずつ主人公にした五話。",
     stories:[["第一話","炭焼きの源さん"],["第二話","郵便配達の自転車"],["第三話","分校の先生"],["第四話","峠の茶屋のおかみさん"],["第五話","村の鍛冶屋"]] },
-  { id:"tane", repo:"roudoku_tanewo_tunagu_hitobito", title:"種をつなぐ人びと", spine:["種をつなぐ人びと"],
+  { id:"tane", sr:"furu", repo:"roudoku_tanewo_tunagu_hitobito", title:"種をつなぐ人びと", spine:["種をつなぐ人びと"],
     meta:"「はじめに」と全五話", c:"#7a5a3a", g:"#f3dca6", w:48, h:244,
     desc:"種屋、漬物名人、養蚕の家、堆肥づくり、苗を分けあう隣人。畑の種と土をつないできた、昭和の村の人びとの物語。",
     stories:[["第一話","種屋のおじさん"],["第二話","漬物名人のおばあさん"],["第三話","養蚕の家"],["第四話","堆肥づくりの名人"],["第五話","苗を分けあう隣の家"]] },
-  { id:"kotoba", repo:"roudoku_batyanno_hatake_kotoba", title:"ばあちゃんの畑ことば", spine:["ばあちゃんの","畑ことば"],
+  { id:"kotoba", sr:"furu", repo:"roudoku_batyanno_hatake_kotoba", title:"ばあちゃんの畑ことば", spine:["ばあちゃんの","畑ことば"],
     meta:"「はじめに」と全五話", c:"#5d6290", g:"#f6ecd6", w:52, h:244,
     desc:"こぶしの花、八十八夜の霜、月の満ち欠け。昔の人が畑で語りついだ言い伝えを、ばあちゃんと孫の物語にした五話。",
     stories:[["第一話","こぶしの花が咲いたら種をまけ"],["第二話","八十八夜の別れ霜"],["第三話","種は三粒まけ"],["第四話","月の満ち欠けと種まき"],["第五話","土は手のひらで知る"]] },
-  { id:"tani1", repo:"roudoku_taninihibiku_jyougenji", title:"谷にひびく", spine:["谷にひびく","常源寺ものがたり"], img:true, intro:"はじめに",
+  { id:"tani1", sr:"tani", repo:"roudoku_taninihibiku_jyougenji", title:"谷にひびく", spine:["谷にひびく","常源寺ものがたり"], img:true, intro:"はじめに",
     meta:"常源寺ものがたり　「はじめに」と全三話", c:"#5b5172", g:"#f2d2a6", w:54, h:244,
     desc:"南相木の谷にある常源寺。その再建記念誌『名刹 常源寺』をもとにした創作です。鐘の音、赤子の産声、鈴の音。戦国の谷にひびいた三つの音の物語。",
     stories:[["第一話","鐘の音が消えるまで"],["第二話","卯月八日の子"],["第三話","鈴の音"]] },
-  { id:"wari", repo:"roudoku_tanino_waritukejyo", title:"谷の割付状", maki:true, spine:["谷の割付状","天保の名主ものがたり"],
+  { id:"wari", sr:"tani", repo:"roudoku_tanino_waritukejyo", title:"谷の割付状", maki:true, spine:["谷の割付状","天保の名主ものがたり"],
     imgUrl:"https://yoshi0213saku-spec.github.io/roudoku_tanino_waritukejyo/images/cover_1.jpg",
     hint:"「はじめに」と第一話から始まり、巻の終わりの「次の巻へ」で五の巻まで続けて読めます。",
     meta:"天保の名主ものがたり　「はじめに」と全五話", c:"#b5652a", g:"#fbecd2", w:52, h:244,
     desc:"江戸時代、幕府の天領だった南相木の谷。毎年秋になると、代官所から年貢の割付状が届きました。冷たい夏と凶作がおそった天保の年、名主の清兵衛と村人たちが支えあって冬を越す、史実をもとにした創作の物語です。",
     stories:[["第一話","割付状の届く日"],["第二話","冷たい夏"],["第三話","御影への道"],["第四話","峠をこえる炭"],["第五話","廻り舞台"]] },
-  { id:"manabi", repo:"roudoku_tanino_manabiya", title:"谷の学び舎", maki:true, spine:["谷の学び舎","明治の村の学校ものがたり"],
+  { id:"manabi", sr:"tani", repo:"roudoku_tanino_manabiya", title:"谷の学び舎", maki:true, spine:["谷の学び舎","明治の村の学校ものがたり"],
     imgUrl:"https://yoshi0213saku-spec.github.io/roudoku_tanino_manabiya/images/cover_1.jpg",
     hint:"「はじめに」と第一話から始まり、巻の終わりの「次の巻へ」で五の巻まで続けて読めます。",
     meta:"明治の村の学校ものがたり　「はじめに」と全五話", c:"#74507a", g:"#fbecd2", w:52, h:244,
     desc:"明治のはじめ、南相木村の最初の学校は常源寺の本堂に開かれました。石盤を手に字を習う子どもたち、学校へ通えなかった少女、芝居の舞台から教室になった神楽殿。谷の学校の四十年を、史実をもとに描いた創作の物語です。",
     stories:[["第一話","お寺の教場"],["第二話","お花の石盤"],["第三話","岩鼻の仮教室"],["第四話","舞台の上の教室"],["第五話","新しい校舎へ"]] },
-  { id:"michi", repo:"tani_no_michishirube", title:"谷の道しるべ", spine:["谷の道しるべ","甲州から谷へ街道ものがたり"],
+  { id:"michi", sr:"tani", repo:"tani_no_michishirube", title:"谷の道しるべ", spine:["谷の道しるべ","甲州から谷へ街道ものがたり"],
     imgUrl:"https://yoshi0213saku-spec.github.io/tani_no_michishirube/images/cover_1.png",
     meta:"甲州から谷へ ― 街道ものがたり　「はじめに」と全五話", c:"#5f7086", g:"#fbf1dc", w:52, h:244,
     desc:"江戸のころ、甲州から佐久へ荷を運んだ佐久往還。その街道から南相木の谷へ分かれる道に、一本の石の道しるべが立っていました。馬方、石工、峠の茶屋の女主人、薬売り。道しるべの前を行き来した人びとの、史実をもとにした創作の物語です。",
     stories:[["第一話","鈴の音"],["第二話","石に刻む"],["第三話","峠の茶屋"],["第四話","背負い荷"],["第五話","道はつづく"]] },
 ];
 const KAN = ["一","二","三","四","五","六","七","八","九","十","十一","十二"];
+/* シリーズ（棚の段と番号はシリーズごと） */
+const SERIES = [["furu","ふるさとシリーズ"],["tani","谷シリーズ"]];
+const SER_NAME = Object.fromEntries(SERIES);
+const noInSeries = b => BOOKS.filter(x => x.sr === b.sr).indexOf(b);
+const label = b => b.sr ? `${SER_NAME[b.sr]}　第${KAN[noInSeries(b)]}話` : `朗読帖　第${KAN[BOOKS.indexOf(b)]}冊`;
 const $ = s => document.querySelector(s);
 const esc = s => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const urlOf = b => "https://" + OWNER + ".github.io/" + b.repo + "/" + (b.page && b.page !== "index.html" ? b.page : "");
@@ -557,7 +567,7 @@ const VASE = `<svg class="decor-svg" viewBox="0 0 90 150" aria-hidden="true">
 </svg>`;
 function spineHtml(b, i) {
   const t = b.spine.length > 1 ? `${esc(b.spine[0])}<small>${esc(b.spine[1])}</small>` : esc(b.spine[0]);
-  return `<button class="spine" data-book="${b.id}" style="--c:${b.c};--g:${b.g};--w:${b.w};--h:${b.h}" aria-label="第${KAN[i]}冊　${esc(b.title)}を取り出す">
+  return `<button class="spine" data-book="${b.id}" style="--c:${b.c};--g:${b.g};--w:${b.w};--h:${b.h}" aria-label="${label(b)}　${esc(b.title)}を取り出す">
     <span class="sp-band"></span>
     <span class="sp-title">${t}</span>
     <span class="sp-band b"></span>${b.vol ? `<span class="sp-no sp-vol">${esc(b.vol)}</span>` : ""}</button>`;
@@ -575,12 +585,17 @@ function renderShelf() {
     let groupNeed = need;
     if (b.series && (i === 0 || BOOKS[i - 1].series !== b.series))
       groupNeed = BOOKS.filter(x => x.series === b.series).reduce((a, x) => a + (x.w + 3) * k, 0);
-    if (cur.length && used + groupNeed > inner) { rows.push(cur); cur = []; used = 14 * k + 8; }
+    const newSeries = i > 0 && b.sr !== BOOKS[i - 1].sr;   // シリーズが変わったら次の段へ
+    if (cur.length && (newSeries || used + groupNeed > inner)) { rows.push(cur); cur = []; used = 14 * k + 8; }
+    if (!cur.length) cur.sr = (rows.length && rows[rows.length - 1].sr === b.sr) ? null : b.sr;
     cur.push(spineHtml(b, i)); used += need;
   });
   if (cur.length) rows.push(cur);
-  const bay = (html, last) => `<div class="bay"><div class="row">${html}</div></div><div class="board${last ? " last" : ""}"></div>`;
-  let html = rows.map((r, i) => bay(r.join("") + (i === rows.length - 1 ? `<span class="bookend"></span>` : ""), false)).join("");
+  const bay = (html, last, lab) => `<div class="bay">${lab ? `<div class="sr-plate"><span>${esc(lab)}</span></div>` : ""}<div class="row">${html}</div></div><div class="board${last ? " last" : ""}"></div>`;
+  let html = rows.map((r, i) => {
+    const nextSame = rows[i + 1] && !rows[i + 1].sr;          // 次の段も同じシリーズの続き
+    return bay(r.join("") + (!nextSame ? `<span class="bookend"></span>` : ""), false, r.sr ? SER_NAME[r.sr] : "");
+  }).join("");
   // いちばん下の段：横に積んだ本と花びん
   const stack = `<span class="lying">${[["#6b4a2e",92],["#2f4a3a",104],["#7a2f2a",98]].map(([c, ww]) => `<i style="--c:${c};width:${ww * k}px"></i>`).join("")}</span>`;
   html += bay(stack + DOLL + `<span class="soon">つぎの朗読帖は<br>ここに並びます</span>` + VASE, true);
@@ -589,7 +604,7 @@ function renderShelf() {
 renderShelf();
 let rz; window.addEventListener("resize", () => { clearTimeout(rz); rz = setTimeout(renderShelf, 200); });
 
-$("#toc").innerHTML = BOOKS.map((b, i) => `<li><button data-book="${b.id}"><span class="k">第${KAN[i]}冊</span><span class="dot" style="--c:${b.c}"></span><span>${esc(b.title)}</span><span class="arrow">›</span></button></li>`).join("");
+$(".toc").innerHTML = SERIES.map(([sr, name]) => `<h3>${esc(name)}</h3><ol>${BOOKS.filter(b => b.sr === sr).map(b => `<li><button data-book="${b.id}"><span class="k">第${KAN[noInSeries(b)]}話</span><span class="dot" style="--c:${b.c}"></span><span>${esc(b.title)}</span><span class="arrow">›</span></button></li>`).join("")}</ol>`).join("");
 
 /* ---------- 本を取り出す ---------- */
 let busy = false;
@@ -642,7 +657,7 @@ function showBook(b) {
       <div class="cover">${b.imgUrl ? imgArt(b) : b.img ? `<svg viewBox="60 0 1080 1920" preserveAspectRatio="xMidYMin slice" aria-hidden="true"><defs><clipPath id="spR"><rect x="1080" y="0" width="60" height="1920"/></clipPath></defs><use href="#cv-${b.id}"/><g clip-path="url(#spR)"><use href="#cv-${b.id}" transform="translate(1080 0) scale(60 1) translate(-1079 0)"/></g></svg>` : art(b.id)}${b.img || b.imgUrl ? "" : `<div class="cv-title">${t}</div>`}${b.imgUrl ? "" : `<div class="cv-author">作　中島義健</div>`}</div>
     </div></div>
     <div class="bv-info">
-      <div class="vol">朗読帖　第${KAN[i]}冊</div>
+      <div class="vol">${esc(label(b))}</div>
       <h2>${esc(b.title)}</h2>
       <div class="meta">${esc(b.meta)}</div>
     </div>
